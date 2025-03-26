@@ -38,7 +38,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-with-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc-with-ui'),
-    #path('api/users/', include('users.urls')),
+    path('api/users/', include('users.urls')),
     path('password-reset/', auth_views.PasswordResetView.as_view(), name='password-reset'),
     path('password-reset-done/', auth_views.PasswordResetDoneView.as_view(), name='password-reset-done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
