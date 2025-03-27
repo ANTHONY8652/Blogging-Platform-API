@@ -45,5 +45,6 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password-reset-complete'),
     path('posts/', include('blog_posts.urls')),
     path('comments/', include('comments.urls')),
+    path('likes/', include('likes.urls')),
 
 ]
