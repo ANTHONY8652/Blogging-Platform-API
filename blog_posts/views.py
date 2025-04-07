@@ -23,6 +23,18 @@ class Blog_PostListCreateAPIView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    def get_queryset(self):
+        queryset = Blog_Post()
+        if not self.request.user.is_authenticated:
+            queryset = queryset.filter(is_draft=False)
+        search = self.request.query_params.get('search')
+        category = self.request.query_params.get('category')
+        if search:
+            queryset = queryset.filter(Blog_Post.Q(title__icontains=search) | Blog_Post.Q(content__icontains=search))
+        if category:
+            queryset = queryset.filter(category__name__icontains=category)
+        return queryset
+
 class Blog_PostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Blog_Post.objects.all()
     serializer_class = Blog_PostSerializer

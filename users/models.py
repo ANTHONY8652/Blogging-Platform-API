@@ -43,4 +43,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f'{self.username}'
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField()
+    profile_picture = models.ImageField(upload_to='profiles/', null=True, blank=True)
+
+class Subscription(models.Model):
+    subscriber = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscriptions')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
+
+
 # Create your models here.

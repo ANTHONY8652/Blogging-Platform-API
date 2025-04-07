@@ -1,8 +1,8 @@
 
-from django.shortcuts import render
+from .models import Profile
 from django.contrib.auth import get_user_model, authenticate
-from .serializers import UserSerializer, UserLoginSerializer, UserLogoutSerializer
-from rest_framework import generics, status, permissions, serializers
+from .serializers import UserSerializer, UserLoginSerializer, UserLogoutSerializer, ProfileSerialzier
+from rest_framework import generics, status, permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
@@ -79,5 +79,10 @@ class UserLogoutView(generics.GenericAPIView):
         
         except (AttributeError, Token.DoesNotExist):
             return Response({'detail': 'Token not found or already logged out, Try again.'}, status=status.HTTP_400_BAD_REQUEST)
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerialzier
+    permission_classes = permissions.IsAuthenticatedOrReadOnly
 
 # Create your views here.

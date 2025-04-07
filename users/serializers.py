@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, Profile
 from django.contrib.auth import authenticate
 
 
@@ -37,3 +37,8 @@ class UserLoginSerializer(serializers.Serializer):
 
 class UserLogoutSerializer(serializers.Serializer):
     pass
+
+class ProfileSerialzier(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
